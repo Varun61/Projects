@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Caesar</title>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    
+    <h1>Caesar Cipher</h1>
+	<p>Text<br/>
+<textarea id="myText" name="p" rows="4" cols="50"></textarea>
+</p>
+
+	Key : <input type="number" id="myKey" style="margin-bottom: 20px;">
+
+	<div>
+	<button class="btn btn-primary btn-md" onclick="encrypt()">Encrypt</button>
+    <button class="btn btn-primary btn-md" onclick="decrypt()">Decrypt</button>
+</div>
+    <p>Output<br/>
+    <textarea id="c" name="c" rows="4" cols="50"></textarea>
+</p>
+<script>
+    
+    function encrypt()
+    {
+    	var text = document.getElementById("myText").value;
+        var key = document.getElementById("myKey").value;
+        
+        let result="";
+        for (var i = 0; i<text.length;i++)
+        {
+            
+            let char = text[i];
+            if (char == char.toUpperCase())
+            {
+                let ch =  String.fromCharCode((char.charCodeAt(0) +parseInt(key)-65) % 26 + 65);
+                result += ch;
+            }
+            else
+            {
+                let ch = String.fromCharCode((char.charCodeAt(0) +parseInt(key)-97) % 26 + 97);
+                result += ch;
+            }
+        }
+      getById("c").value = result;
+    }
+
+    function decrypt()
+    {
+        var text = document.getElementById("myText").value;
+        var key = document.getElementById("myKey").value;
+        
+        let result="";
+        for (var i = 0; i<text.length;i++)
+        {
+            
+            let char = text[i];
+            if (char == char.toUpperCase())
+            {
+                let ch =  String.fromCharCode((char.charCodeAt(0) - parseInt(key)-65) % 26 + 65);
+                result += ch;
+            }
+            else
+            {
+                let ch = String.fromCharCode((char.charCodeAt(0) - parseInt(key)-97) % 26 + 97);
+                result += ch;
+            }
+        }
+        getById("c").value = result;
+    }
+
+    function getById(id) {
+    return document.getElementById(id);
+}
+</script>
+</body>
+</html>

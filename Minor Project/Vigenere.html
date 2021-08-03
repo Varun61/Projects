@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vigenere</title>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    
+    <h1>Vigenere Cipher</h1>
+    <p>Text<br />
+<textarea id="myText" name="p" rows="4" cols="50"></textarea>
+</p>
+Key : <input type="text" id="myKey" style="margin-bottom: 20px;">
+    <div>
+    <button class="btn btn-primary btn-md" onclick="cipherText()">Encrypt</button>
+    <button class="btn btn-primary btn-md" onclick="originalText()">Decrypt</button>
+</div>
+    <p>Output<br/>
+    <textarea id="c" name="c" rows="4" cols="50"></textarea>
+</p>
+<script>
+function cipherText()
+{
+    var str = document.getElementById("myText").value;
+    var keyword = document.getElementById("myKey").value; 
+    var key;
+    keyword=keyword.split("");
+    if(str.length == keyword.length)
+           key = keyword.join("");
+    else
+    {
+        let temp=keyword.length;   
+        for (let i = 0;i<(str.length-temp) ; i++)
+        {
+             
+            keyword.push(keyword[i % ((keyword).length)])
+        }
+    }
+
+    key = keyword.join("");
+    let cipher_text="";
+  
+    for (let i = 0; i < str.length; i++)
+    {
+        // converting in range 0-25
+        let x = (str[i].charCodeAt(0) + key[i].charCodeAt(0)) %26;
+  
+        // convert into alphabets(ASCII)
+        x += 'A'.charCodeAt(0);
+  
+        cipher_text+=String.fromCharCode(x);
+    }
+    getById("c").value = cipher_text;
+}
+ 
+// This function decrypts the encrypted text
+// and returns the original text
+function originalText()
+{
+    var str = document.getElementById("myText").value;
+    var keyword = document.getElementById("myKey").value; 
+    var key;
+    keyword=keyword.split("");
+    if(str.length == keyword.length)
+         key = keyword.join("");
+    else
+    {
+        let temp=keyword.length;   
+        for (let i = 0;i<(str.length-temp) ; i++)
+        {
+             
+            keyword.push(keyword[i % ((keyword).length)])
+        }
+    }
+
+    key = keyword.join("");
+    let orig_text="";
+  
+    for (let i = 0 ; i < str.length ; i++)
+    {
+        // converting in range 0-25
+        let x = (str[i].charCodeAt(0) -
+                    key[i].charCodeAt(0) + 26) %26;
+  
+        // convert into alphabets(ASCII)
+        x += 'A'.charCodeAt(0);
+        orig_text+=String.fromCharCode(x);
+    }
+    getById("c").value = orig_text;
+}
+ 
+// This function will convert the lower
+// case character to Upper case
+function LowerToUpper(s)
+{
+    let str =(s).split("");
+    for(let i = 0; i < s.length; i++)
+    {
+        if(s[i] == s[i].toLowerCase())
+        {
+            str[i] = s[i].toUpperCase();
+        }
+    }
+    s = str.toString();
+    return s;
+}
+function getById(id) {
+    return document.getElementById(id);
+}
+</script>
+</body>
+</html>
